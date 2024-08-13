@@ -3,12 +3,18 @@
 .categories {
   ul {
     display: flex;
+      @media (max-width: 975px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);  
+        }
+      
 
     li {
       background-color: #f9f9f9;
       padding: 13px 30px;
       border-radius: 30px;
       margin-right: 10px;
+      margin-bottom: 5px;
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
@@ -26,6 +32,11 @@
         background-color: #282828;
         color: #fff;
       }
+      @media (max-width: 540px) {
+        padding: 10px 15px;
+        font-size: 12px;
+        }
+      
     }
   }
 }

@@ -7,17 +7,19 @@ import PizzaBlock from '../components/PizzaBlock'
 const Home = () => {
     const [items, setItems] = React.useState([])
 const [isLoading, setIsLoading] = React.useState(true)
+
 React.useEffect(() => {
   fetch('https://66b451169f9169621ea27051.mockapi.io/items')
   .then((response) => {
     return response.json()
   }).then(arr => {
     setItems(arr)
-    setIsLoading(false)
+    setIsLoading(false)  
 })
+window.scrollTo(0,0)
 }, [])
   return (
-    <>
+    <div className="container">
      <div className="content__top">
             <Categories />
             <Sort />
@@ -31,7 +33,7 @@ React.useEffect(() => {
                 : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />  )
              } 
           </div>
-    </>
+    </div>
   )
 }
 

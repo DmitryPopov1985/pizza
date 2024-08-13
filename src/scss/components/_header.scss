@@ -3,6 +3,9 @@
 .header {
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
+  @media (max-width: 975px) {
+    padding: 20px 0;
+    }
 
   .container {
     display: flex;
@@ -27,6 +30,9 @@
 
     p {
       color: #7b7b7b;
+      @media (max-width: 650px) { 
+        display: none;
+        }
     }
   }
 }
