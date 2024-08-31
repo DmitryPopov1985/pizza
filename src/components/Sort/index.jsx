@@ -1,12 +1,17 @@
 import React from "react"
 
-function Sort() {
+function Sort({value, onChangeSort}) {
     const [open, setOpen] = React.useState(false)
-    const [selected, setSelected] = React.useState(0)
-    const list = ['популярности','цене','алфавиту']
-    const sortValue = list[selected]
-    const toogleSort = (i) => {
-        setSelected(i)
+    const list = [
+      {name: 'популярности(desc)',sortProperty: 'rating' },
+      {name: 'популярности(asc)',sortProperty: '-rating' },
+      {name: 'цене(desc)',sortProperty: 'price' },
+      {name: 'цене(asc)',sortProperty: '-price' },
+      {name: 'алфавиту(desk)',sortProperty: 'name' },
+      {name: 'алфавиту(asc)',sortProperty: '-name' },
+    ]
+    const toogleSort = (value) => {
+        onChangeSort(value)
         setOpen(false)
     }
     return (
@@ -25,13 +30,13 @@ function Sort() {
                     />
                   </svg>
                   <b>Сортировка по:</b>
-                  <span onClick={() => setOpen(!open)}>{sortValue}</span>
+                  <span onClick={() => setOpen(!open)}>{value.name}</span>
                 </div>
                 {open && (
                     <div className="sort__popup">
                     <ul>
                         {
-                            list.map((value, i) => <li key={value} onClick={() => toogleSort(i)} className={ selected === i ? 'active' : '' } >{value}</li>)
+                            list.map((obj, i) => <li key={obj.name} onClick={() => toogleSort(obj)} className={ value.sortProperty === obj.sortProperty ? 'active' : '' } >{obj.name}</li>)
                         }
                     </ul>
                   </div>
