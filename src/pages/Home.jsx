@@ -3,22 +3,26 @@ import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import PizzaLoader from '../components/PizzaBlock/PizzaLoader'
 import PizzaBlock from '../components/PizzaBlock'
+import Pagination from '../components/Pagination'
 
-const Home = () => {
+
+const Home = ({ searchValue }) => {
   const [items, setItems] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [categoryId, setCategoryId] = React.useState(0)
   const [sortType, setSortType] = React.useState({name: 'популярности',sortProperty: 'rating' })
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  
-console.log(sortType)
+
 
   React.useEffect(() => {
     setIsLoading(true)
     const category = categoryId > 0 ? `category=${categoryId}` : ''
     const sortBy = sortType.sortProperty.replace('-', '')
     const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
-    fetch(`https://66b451169f9169621ea27051.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`)
+    const search = searchValue ?  `&search=${searchValue} ` : ''
+
+    fetch(`https://66b451169f9169621ea27051.mockapi.io/items?limit=4&page=${currentPage}&${category}&sortBy=${sortBy}&order=${order}${search}`)
       .then((response) => {
         return response.json()
       }).then(arr => {
@@ -26,7 +30,17 @@ console.log(sortType)
         setIsLoading(false)
       })
     window.scrollTo(0, 0)
-  }, [categoryId, sortType])
+  }, [categoryId, sortType, searchValue, currentPage])
+
+  const pizzas = items
+  // .filter((obj) => {
+  //   if(obj.name.toLowerCase().includes(searchValue.toLowerCase() )) {
+  //     return true
+  //   }
+  //   return false
+  // })
+  .map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+
   return (
     <div className="container">
       <div className="content__top">
@@ -35,13 +49,9 @@ console.log(sortType)
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-
-        {
-          isLoading
-            ? [...new Array(6)].map((_, i) => <PizzaLoader key={i} />)
-            : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
-        }
+        {isLoading ? [...new Array(6)].map((_, i) => <PizzaLoader key={i} />): pizzas}
       </div>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </div>
   )
 }
