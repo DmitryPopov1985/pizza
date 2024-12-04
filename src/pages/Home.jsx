@@ -7,7 +7,7 @@ import PizzaBlock from '../components/PizzaBlock'
 import Pagination from '../components/Pagination'
 import { SearchContext } from '../App'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategoryId } from '../redux/slices/filterSlice'
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice'
 
 
 const Home = () => {
@@ -17,8 +17,8 @@ const Home = () => {
   const [isLoading, setIsLoading] = React.useState(true)
   // const [categoryId, setCategoryId] = React.useState(0)
   // const [sortType, setSortType] = React.useState({name: 'популярности',sortProperty: 'rating' })
-  const [currentPage, setCurrentPage] = React.useState(1)
-  const {categoryId, sort} = useSelector((state) => state.filter )
+  // const [currentPage, setCurrentPage] = React.useState(1)
+  const {categoryId, sort, currentPage } = useSelector((state) => state.filter )
   
   
 
@@ -56,7 +56,7 @@ const Home = () => {
       <div className="content__items">
         {isLoading ? [...new Array(6)].map((_, i) => <PizzaLoader key={i} />): pizzas}
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination currentPage={currentPage} onChangePage={(number) => dispatch(setCurrentPage(number))} />
     </div>
   )
 }
