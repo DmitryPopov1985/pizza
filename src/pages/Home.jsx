@@ -65,7 +65,6 @@ const Home = () => {
       })
     )
       isSearch.current = true
-      console.log(params)
     }
     
   }, [])
