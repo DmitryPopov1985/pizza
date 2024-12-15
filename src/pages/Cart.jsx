@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import CartItem from '../components/Cart/CartItem'
-import emptyCartImg from '../assets/img/empty-cart.png'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { clearItems } from '../redux/slices/cartSlice'
@@ -16,7 +15,7 @@ const Cart = () => {
   }
   if(!totalPrice) {
     return (
-      <div class="container container--cart">
+      <div className="container container--cart">
           <CartEmpty/>
         </div>
     )
