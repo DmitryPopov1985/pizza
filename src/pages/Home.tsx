@@ -12,7 +12,7 @@ import { fetchPizzas, selectPizzas} from '../redux/slices/pizzasSlice'
 import NotFoundBlock from '../components/NotFoundBlock/NotFoundBlock'
 
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {items, status }= useSelector(selectPizzas)
@@ -27,7 +27,16 @@ const Home = () => {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
     const search = searchValue ? `&search=${searchValue} ` : ''
 
-    dispatch(fetchPizzas({ category, sortBy, order, search, currentPage}))
+    dispatch(
+      //@ts-ignore
+      fetchPizzas({
+        category,
+        sortBy,
+        order,
+        search,
+        currentPage,
+      })
+    )
    
     window.scrollTo(0, 0)
   }
@@ -86,12 +95,12 @@ const Home = () => {
     //   }
     //   return false
     // })
-    .map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+    .map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={(id) => dispatch(setCategoryId(id))} />
+        <Categories value={categoryId} onChangeCategory={(idx: number) => dispatch(setCategoryId(idx))} />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
@@ -101,7 +110,7 @@ const Home = () => {
         }
        
       </div>
-      <Pagination currentPage={currentPage} onChangePage={(number) => dispatch(setCurrentPage(number))} />
+      <Pagination currentPage={currentPage} onChangePage={(page: number) => dispatch(setCurrentPage(page))} />
     </div>
   )
 }
