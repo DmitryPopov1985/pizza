@@ -27,8 +27,9 @@ function Sort() {
     setOpen(false)
   }
   React.useEffect(() => {
-    const handleClickOutside = (evt: any) => {
-      if(!evt.composedPath().includes(sortRef.current)){
+ 
+    const handleClickOutside = (evt: MouseEvent) => {
+      if(!evt.composedPath().includes(sortRef.current as EventTarget)){
       setOpen(false)
       console.log('outside fixed')
       }
